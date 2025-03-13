@@ -1,0 +1,111 @@
+## Вариант первый
+
+Запросить информацию о продукте по артикулу. В ответе придет вся информация о продукте (выбранной конфигурации) в т.ч. ссылка на 3D модель.
+
+### Запрос
+
+> **GET:**{{host}}/api/v1/products/?guid
+>
+> В **headers** запроса обязательно передается заголовок авторизации.
+>
+> В **query params** передать артикул продукта (guid).
+>
+> host: <https://api.zarbo.tech>
+
+### Пример:
+
+```json
+GET https://api.zarbo.tech/api/v1/products/?guid=111
+
+Response:
+{
+    "count": 1,
+    "total_count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 9908,
+            "guid": "111",
+            "name": "Тестовый куб",
+            "ar_placement": "floor",
+            "preview": "https://api.zarbo.tech/media/name_C2hlElN.png",
+            "additional_data": null,
+            "is_active": true,
+            "shaders": [
+                {
+                    "id": 15353,
+                    "name": "1",
+                    "code": "1",
+                    "product_id": 9908,
+                    "materials": [],
+                    "is_default": false
+                }
+            ],
+            "collection_id": 970,
+            "models": [
+                {
+                    "id": 38989,
+                    "file": "https://api.zarbo.tech/media/256/970/9908/glb/kub_e764_1739362843817887326.glb",
+                    "product_id": 9908,
+                    "weight": 6.7272796630859375,
+                    "format": "glb",
+                    "token": "fe0643f1095c4e3fa379aae26428ff07",
+                    "name": "куб",
+                    "quality_id": 1,
+                    "is_temp": false,
+                    "additional_data": "3d ar_android ar_ios",
+                    "conversion_info": "",
+                    "product": 9908
+                }
+            ],
+            "tags": [],
+            "is_blocked": false,
+            "description": ""
+        }
+    ]
+}
+```
+
+## Вариант второй
+
+Если в первом варианте будет неудобно обрабатывать всю информацию о продукте, то можно сократить объем обрабатываемой информации отправив второй запрос на получение информации о 3D модели.
+
+**Запрос**
+
+> **GET:** {{host}}/api/v1/models/?model_id
+>
+> В **headers** запроса обязательно передается заголовок авторизации.
+>
+> В **query params** передать **id** модели полученный из первого запроса.
+>
+> host: <https://api.zarbo.tech>
+
+### Пример:
+
+```
+https://api.zarbo.tech/api/v1/models/?model_id=38989
+
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 38989,
+            "file": "https://api.zarbo.tech/media/256/970/9908/glb/kub_e764_1739362843817887326.glb",
+            "product_id": 9908,
+            "weight": 6.7272796630859375,
+            "format": "glb",
+            "token": "fe0643f1095c4e3fa379aae26428ff07",
+            "name": "куб",
+            "quality_id": 1,
+            "is_temp": false,
+            "additional_data": "3d ar_android ar_ios",
+            "conversion_info": "",
+            "product": 9908
+        }
+    ]
+```
+
+
